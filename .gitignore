@@ -1,12 +1,24 @@
-*.class
+/server/target/
+/server/nb-configuration.xml
+/server/.classpath
+/server/.project
+/server/.settings/
+/server/nbactions-tomcat7.xml
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+/view/app/nbproject/private/
+/view/node_modules
+/view/dist
+/view/.tmp
+/view/.sass-cache
+/view/bower_components
+/view/nbproject/private/
 
-# Package Files #
-*.jar
-*.war
-*.ear
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
+/mobile/bower_components/
+/mobile/node_modules/
+/mobile/.tmp/
+/mobile/.DS_Store
+/mobile/*.log
+/mobile/*.keystore
+/mobile/*.sw*
+/mobile/platforms/
+/mobile/plugins/
