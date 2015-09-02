@@ -22,3 +22,4 @@
 /mobile/*.sw*
 /mobile/platforms/
 /mobile/plugins/
+/mobile/nbproject/private/
