@@ -5,18 +5,13 @@
  */
 package pgxp.services;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 
 /**
  *
  * @author 70744416353
  */
-@javax.ws.rs.ApplicationPath("api")
+@ApplicationPath("api")
 public class ApplicationConfig extends Application {
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-
-    }
 }

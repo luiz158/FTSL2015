@@ -5,9 +5,6 @@
  */
 package pgxp.security;
 
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.security.auth.login.LoginException;

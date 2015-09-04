@@ -13,6 +13,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -26,15 +27,16 @@ import pgxp.security.PGXPAuthenticator;
  *
  * @author gladson
  */
-@Path("Auth")
-@Consumes(MediaType.APPLICATION_JSON)
+@Path("auth")
+@Produces({"application/json"})
+@Consumes({"application/json"})
 public class Auth {
 
     @Inject
     PGXPAuthenticator authenticator;
 
     @POST
-    @Path("Login")
+    @Path("login")
     public Response login(Credentials credentials) {
         try {
             if (credentials.getNome() != null && credentials.getPassword() != null) {
@@ -55,7 +57,7 @@ public class Auth {
     }
 
     @DELETE
-    @Path("Logout")
+    @Path("logout")
     public Response logout(@Context HttpHeaders httpHeaders) {
         return Response.status(Response.Status.OK).build();
     }

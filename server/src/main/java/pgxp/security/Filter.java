@@ -5,6 +5,7 @@
  */
 package pgxp.security;
 
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
@@ -27,15 +28,7 @@ import javax.ws.rs.ext.Provider;
  */
 @PreMatching
 @Provider
-public class Filter implements ClientRequestFilter, ClientResponseFilter, ContainerRequestFilter, ContainerResponseFilter {
-
-    @Override
-    public void filter(ClientRequestContext requestContext) {
-    }
-
-    @Override
-    public void filter(ClientRequestContext requestContext, ClientResponseContext responseContext) {
-    }
+public class Filter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) {
@@ -53,17 +46,8 @@ public class Filter implements ClientRequestFilter, ClientResponseFilter, Contai
         }
 
         if (!path.contains("Auth")) {
-
+            return;
         }
-    }
-
-    @Override
-    public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext) {
-        responseContext.getHeaders().add("Access-Control-Allow-Origin", "*");
-        responseContext.getHeaders().add("Access-Control-Allow-Credentials", "true");
-        responseContext.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, OPTIONS");
-        responseContext.getHeaders().add("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-
     }
 
 }

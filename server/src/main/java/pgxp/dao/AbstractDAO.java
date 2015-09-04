@@ -7,6 +7,7 @@ package pgxp.dao;
 
 import java.util.List;
 import java.util.function.Predicate;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -18,6 +19,7 @@ import javax.persistence.criteria.Root;
  *
  * @author gladson
  */
+
 public abstract class AbstractDAO<T> {
 
     protected final Class<T> entityClass;

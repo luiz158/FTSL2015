@@ -22,8 +22,8 @@ public class UsuarioDAO extends AbstractDAO<Usuario> {
 
     public Usuario find(String email) {
         String jpql
-               = "select u from Usuario u" +
-                 " where u.nome = :nome";
+                = "select u from Usuario u"
+                + " where u.nome = :nome";
 
         Query query = em.createQuery(jpql);
         query.setParameter("nome", email);
