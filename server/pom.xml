@@ -3,17 +3,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>pgxp</groupId>
-    <artifactId>server</artifactId>
+    <artifactId>biblia</artifactId>
     <version>1.0.0</version>
     <packaging>war</packaging>
 
-    <name>server</name>
+    <name>biblia</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -21,7 +21,7 @@
             <version>4.3.1.Final</version>
             <scope>provided</scope>
         </dependency>
-        
+
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -31,6 +31,7 @@
     </dependencies>
 
     <build>
+        <finalName>biblia</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
