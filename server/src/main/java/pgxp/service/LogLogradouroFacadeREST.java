@@ -26,7 +26,7 @@ import pgxp.domain.LogLogradouro;
  * @author gladson
  */
 @Stateless
-@Path("pgxp.domain.loglogradouro")
+@Path("cod")
 public class LogLogradouroFacadeREST extends AbstractFacade<LogLogradouro> {
 
     @PersistenceContext(unitName = "pgxp_cep_war_1.0.0PU")
@@ -43,10 +43,10 @@ public class LogLogradouroFacadeREST extends AbstractFacade<LogLogradouro> {
     }
 
     @GET
-    @Path("cep/{cep}")
+    @Path("{cep}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response find(@PathParam("cep") String id) {
-        return Response.ok().entity(super.findNamedQuary("", "", id)).build();
+        return Response.ok().entity(super.findNamedQuary("LogLogradouro.findByCep", "cep", id)).build();
     }
 
 }
