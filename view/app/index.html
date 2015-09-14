@@ -1,126 +1,74 @@
-<!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
-<html ng-app="viewApp" lang="pt-br" manifest="manifest.appcache">
+<!doctype html>
+<html ng-app="cep" ng-controller="ApplicationController" class="ng-scope">
     <head>
-        <meta charset="UTF-8">
-        <title>devdesk</title>
-        <!-- Tell the browser to be responsive to screen width -->
-        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-        <!-- Bootstrap 3.3.4 -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Demoiselle - Busca CEP</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="description" content="">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <!-- build:css(.) styles/vendor.css -->
-        <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="bower_components/admin-lte/dist/css/AdminLTE.css" rel="stylesheet" type="text/css"/>
-        <link href="bower_components/admin-lte/dist/css/skins/skin-blue.css" rel="stylesheet" type="text/css" />
         <!-- bower:css -->
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="bower_components/mdi/css/materialdesignicons.css" />
+        <link rel="stylesheet" href="bower_components/mdi/css/materialdesignicons.min.css" />
+        <link rel="stylesheet" href="bower_components/lumx/dist/lumx.css" />
         <!-- endbower -->
         <!-- endbuild -->
-
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
+        <!-- build:css(.tmp) styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <!-- endbuild -->
     </head>
+    <body ng-class="{ 'home': checkHome() }" class>
 
-    <body class="skin-blue sidebar-mini" ng-controller="AuthController" >
-        <div class="wrapper" ng-if="currentUser" ng-cloak >
+        <header class="header">
+            <div class="menubar">
+                <button class="btn btn--m btn--icon btn--white" lx-ripple="white" ng-click="Sidebar.toggleSidebar()">
+                    <i class="mdi mdi-menu"></i>
+                </button>
+            </div>
 
-            <!-- Main Header -->
-            <header class="main-header" >
-
-                <!-- Logo -->
-                <a href="#todo" class="logo">
-                    <!-- mini logo for sidebar mini 50x50 pixels -->
-                    <span class="logo-mini"><b>TDC</b></span>
-                    <!-- logo for regular state and mobile devices -->
-                    <span class="logo-lg">ToDoCooL</span>
+            <h1 class="main-logo">
+                <a href="/" lx-ripple="white">
+                    <img src="images/icon.jpg" height="60" >
                 </a>
+            </h1>
 
-                <!-- Header Navbar -->
-                <nav class="navbar navbar-static-top" role="navigation">
-                    <!-- Sidebar toggle button-->
-                    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                        <span class="sr-only">Navegador</span>
-                    </a>
-                    <!-- Navbar Right Menu -->
-                    <div class="navbar-custom-menu" >
-                        <ul class="nav navbar-nav">
-                            <!-- Messages: style can be found in dropdown.less-->
-
-                            <!-- User Account Menu -->
-                            <li class="dropdown user user-menu" ng-controller="AuthController">
-                                <!-- Menu Toggle Button -->
-                                <a href="#todo" class="dropdown-toggle" data-toggle="dropdown">
-                                    <!-- The user image in the navbar-->
-                                    <!--<img src="images/photo.jpg" class="user-image" alt="User Image"/>-->
-                                    <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                    <span class="hidden-xs">{{currentUser.name}}</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <!-- The user image in the menu -->
-                                    <li class="user-header">
-                                        <!--<img src="images/photo.jpg" class="img-circle" alt="User Image" />-->
-                                        <p>
-                                            {{currentUser.name}}  {{currentUser.setor}}
-                                        </p>
-                                    </li>
-                                    <!-- Menu Footer-->
-                                    <li class="user-footer">
-                                        <div class="pull-right">
-                                            <a style="cursor: pointer" ng-click="logout()"><i class="glyphicon glyphicon-log-out"></i> Logout</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </header>
-            <!-- Left side column. contains the logo and sidebar -->
-            <aside class="main-sidebar">
-
-                <!-- sidebar: style can be found in sidebar.less -->
-                <section class="sidebar">
-
-                    <!-- Sidebar Menu -->
-                    <ul class="sidebar-menu">
-                        <li class="header">Menu</li>
-                        <!-- Optionally, you can add icons to the links -->
-                        <li class="active"><a href="#todo"><i class='fa fa-dashboard'></i> <span>ToDo</span></a></li>
-                        <!--<li><a href="#conferencia"><i class='fa '></i> <span>Chat</span></a></li>-->
-                    </ul><!-- /.sidebar-menu -->
-                </section>
-                <!-- /.sidebar -->
-            </aside>
-
-            <!-- Content Wrapper. Contains page content -->
-            <div class="content-wrapper">
-                <div ng-view=""></div>
-            </div><!-- /.content-wrapper -->
-
-            <!-- Main Footer -->
-            <footer class="main-footer">
-                <!-- To the right -->
-                <div class="pull-right hidden-xs">
-
-                </div>
-                <!-- Default to the left -->
-                <strong>br.com.pgxp - Sistema Exemplo <a href="http://github.com/PGXP/FTLS2015">Repositório</a></strong>
-            </footer>
+            <nav class="main-nav main-nav--lap-and-up">
+                <ul>
+                    <li><a href="https://www.frameworkdemoiselle.gov.br" target="_black" class="main-nav__link" lx-ripple="white" style="position: relative; overflow: hidden;">Portal Demoiselle</a></li>
+                </ul>
+            </nav>
 
 
+        </header>
 
-        </div><!-- ./wrapper -->
-        <div ng-if="!currentUser" ng-include src="'views/login.html'" ></div>
+        <div class="sidebar-filter" ng-class="{ 'sidebar-filter--is-shown': Sidebar.isSidebarShown() }" ng-click="Sidebar.toggleSidebar()"></div>
 
+        <div class="sidebar" ng-class="{ 'sidebar--is-shown': Sidebar.isSidebarShown() }">
+            <div class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="#cep" class="sidebar-menu__link">
+                            <i class="fa fa-envelope"></i> <span>Cep</span>
 
-        <!-- REQUIRED JS SCRIPTS -->
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#logra" class="sidebar-menu__link">
+                            <i class="fa fa-envelope"></i> <span>Logradouro</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#especial" class="sidebar-menu__link">
+                            <i class="fa fa-envelope"></i> <span>Especiais</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Main -->
+        <div class="main" ng-view></div>
+
 
         <!-- build:js(.) scripts/vendor.js -->
         <!-- bower:js -->
@@ -135,26 +83,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <script src="bower_components/angular-route/angular-route.js"></script>
         <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
         <script src="bower_components/angular-touch/angular-touch.js"></script>
+        <script src="bower_components/velocity/velocity.js"></script>
+        <script src="bower_components/velocity/velocity.ui.js"></script>
+        <script src="bower_components/moment/moment.js"></script>
+        <script src="bower_components/lumx/dist/lumx.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/directives/directives.js"></script>
-        <script src="scripts/filters/filters.js"></script>
-        <!-- endbuild -->
-
-        <!-- build:js({.tmp,app}) scripts/controllers.js -->
-        <script src="scripts/controllers/auth.js"></script>
-        <script src="scripts/controllers/conferencia.js"></script>
-        <script src="scripts/controllers/usuario.js"></script>
-        <!-- endbuild -->
-
         <!-- build:js({.tmp,app}) scripts/services.js -->
-        <script src="scripts/services/auth.js"></script>
-        <script src="scripts/services/conferencia.js"></script>
-        <script src="scripts/services/usuario.js"></script>
-        <!-- endbuild -->
+        <script src="scripts/app.js" type="text/javascript"></script>
+        <script src="scripts/services/app.js" type="text/javascript"></script>
 
+        <script src="scripts/directives/directives.js" type="text/javascript"></script>
+
+        <script src="scripts/controllers/auth.js" type="text/javascript"></script>
+        <script src="scripts/controllers/application.js" type="text/javascript"></script>
+        <script src="scripts/controllers/cep.js" type="text/javascript"></script>
+        <script src="scripts/controllers/logra.js" type="text/javascript"></script>
+        <script src="scripts/controllers/especial.js" type="text/javascript"></script>
+
+        <script src="scripts/services/auth.js" type="text/javascript"></script>
+        <script src="scripts/services/alert.js" type="text/javascript"></script>
+        <script src="scripts/services/validation.js" type="text/javascript"></script>
+        <script src="scripts/services/cep.js" type="text/javascript"></script>
+        <script src="scripts/services/logra.js" type="text/javascript"></script>
+        <script src="scripts/services/especial.js" type="text/javascript"></script>
+
+        <script src="scripts/filters/filters.js" type="text/javascript"></script>
+        <!--<script src="scripts/filters/i18n.js" type="text/javascript"></script>-->
     </body>
 </html>

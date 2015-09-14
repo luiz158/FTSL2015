@@ -1,11 +1,21 @@
 'use strict';
 
-app.controller('AuthController', ['$scope', '$rootScope', 'AUTH_EVENTS', 'AuthService',
-    function($scope, $rootScope, AUTH_EVENTS, AuthService) {
+app.controller('AuthController', ['$scope', '$rootScope', 'AUTH_EVENTS', 'AuthService', 'AppService', 'AlertService',
+    function($scope, $rootScope, AUTH_EVENTS, AuthService, AppService, AlertService) {
+
+        //Check if user has token
+        var token = AppService.getToken();
+
+        if (token) {
+            AuthService.getUserLogged().then(function(user) {
+                $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                $rootScope.setCurrentUser(user);
+            });
+        }
 
         $scope.credentials = {
-            username: '',
-            password: ''
+            username: 'admin',
+            password: 'admin'
         };
 
         function error(data, status) {
@@ -26,17 +36,23 @@ app.controller('AuthController', ['$scope', '$rootScope', 'AUTH_EVENTS', 'AuthSe
 
 
         $scope.login = function(credentials) {
-            AuthService.login(credentials).then(function() {
+            AuthService.login(credentials).then(function(user) {
                 $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
+                $rootScope.setCurrentUser(user);
             },
-                function(response) {
-                    $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
-                    error(response.data, response.status);
-                });
+                    function(response) {
+                        AlertService.addWithTimeout('danger', 'Não foi possível se comunicar com o servidor!');
+                        $rootScope.$broadcast(AUTH_EVENTS.loginFailed);
+                        $rootScope.setCurrentUser(null);
+                        error(response.data, response.status);
+                    });
         };
 
         $scope.logout = function() {
-            $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+            AuthService.logout().then(function() {
+                $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
+                $rootScope.setCurrentUser(null);
+            });
         };
 
     }]);

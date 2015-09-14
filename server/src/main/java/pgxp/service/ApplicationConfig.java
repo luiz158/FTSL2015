@@ -8,10 +8,7 @@ package pgxp.service;
 import java.util.Set;
 import javax.ws.rs.core.Application;
 
-/**
- *
- * @author gladson
- */
+
 @javax.ws.rs.ApplicationPath("api")
 public class ApplicationConfig extends Application {
 
@@ -22,14 +19,11 @@ public class ApplicationConfig extends Application {
         return resources;
     }
 
-    /**
-     * Do not modify addRestResourceClasses() method.
-     * It is automatically populated with
-     * all resources defined in the project.
-     * If required, comment out calling this method in getClasses().
-     */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(pgxp.service.LogCEPFacadeREST.class);
         resources.add(pgxp.service.LogLogradouroFacadeREST.class);
+        resources.add(pgxp.service.LogUFFacadeREST.class);
+        resources.add(pgxp.util.Cors.class);
     }
-    
+
 }

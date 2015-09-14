@@ -5,15 +5,21 @@
  */
 package pgxp.service;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import pgxp.domain.LogFaixaUf;
 import pgxp.domain.LogLogradouro;
 
 /**
@@ -21,14 +27,14 @@ import pgxp.domain.LogLogradouro;
  * @author gladson
  */
 @Stateless
-@Path("log")
-public class LogLogradouroFacadeREST extends AbstractFacade<LogLogradouro> {
+@Path("uf")
+public class LogUFFacadeREST extends AbstractFacade<LogFaixaUf> {
 
     @PersistenceContext(unitName = "pgxp_cep_war_1.0.0PU")
     private EntityManager em;
 
-    public LogLogradouroFacadeREST() {
-        super(LogLogradouro.class);
+    public LogUFFacadeREST() {
+        super(LogFaixaUf.class);
     }
 
     @Override
@@ -37,10 +43,9 @@ public class LogLogradouroFacadeREST extends AbstractFacade<LogLogradouro> {
     }
 
     @GET
-    @Path("{uf}/{nome}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response find(@PathParam("uf") String uf, @PathParam("nome") String nome) {
-        return Response.ok().entity(super.findNamedQuary("LogLogradouro.findByLogNome", "ufeSg", uf, "logNome", "%" + nome + "%")).build();
+    public Response find() {
+        return Response.ok().entity(super.findNamedQuary("LogLogradouro.findAll")).build();
     }
 
 }

@@ -1,0 +1,62 @@
+<div class="main-section">
+    <h3 class="main-section__title">Busca CEP</h3>
+    <div  flex-container="row" flex-gutter="9">
+        <div flex-item>
+            <lx-text-field label="CEP" >
+                <input type="text" class="form-control" ng-model="texto" ng-enter="get(texto)">
+            </lx-text-field>
+            <button type="button" ng-click="get(texto)" >
+
+            </button>
+        </div>
+    </div>
+
+    <div class="main-section__content">
+        <div class="example mt++">
+            <div class="example__content">
+                <div flex-container="row">
+                    <div flex-item>
+                        <lx-text-field label="CEP" disabled="true">
+                            <input type="text" ng-model="resultado.cep" ng-disabled="true">
+                        </lx-text-field>
+                    </div>
+                </div>
+
+                <div flex-container="row" flex-gutter="12">
+                    <div flex-item>
+                        <lx-text-field label="Tipo" >
+                            <input type="text" ng-model="resultado.logTipoLogradouro" ng-disabled="true">
+                        </lx-text-field>
+                    </div>
+
+                    <div flex-item>
+                        <lx-text-field label="Nome" >
+                            <input type="text" ng-model="resultado.logNome" ng-disabled="true">
+                        </lx-text-field>
+                    </div>
+                </div>
+
+                <div flex-container="row" flex-gutter="12">
+                    <div flex-item>
+                        <lx-text-field label="Cidade" >
+                            <input type="text" ng-model="resultado.baiNuSequencialIni.locNuSequencial.locNo" ng-disabled="true">
+                        </lx-text-field>
+                    </div>
+
+                    <div flex-item>
+                        <lx-text-field label="Bairro" >
+                            <input type="text" ng-model="resultado.baiNuSequencialIni.baiNo" ng-disabled="true">
+                        </lx-text-field>
+                    </div>
+
+                    <div flex-item>
+                        <lx-text-field label="UF" >
+                            <input type="text" ng-model="resultado.ufeSg" ng-disabled="true">
+                        </lx-text-field>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

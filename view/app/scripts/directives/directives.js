@@ -1,23 +1,18 @@
 'use strict';
 
-app.directive('uiLinhabar', ['$rootScope', '$anchorScroll', function($rootScope, $anchorScroll) {
-        return {
-            restrict: 'AC',
-            template: '<span class="bar"></span>',
-            link: function(scope, el, attrs) {
-                el.addClass('linhabar hide');
-                scope.$on('$routeChangeStart', function(e) {
-                    $anchorScroll();
-                    el.removeClass('hide').addClass('active');
-                });
-                scope.$on('$routeChangeSuccess', function(event, toState, toParams, fromState) {
-                    event.targetScope.$watch('$viewContentLoaded', function() {
-                        el.addClass('hide').removeClass('active');
-                    })
-                });
-            }
+
+
+app.directive('backButton', function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            element.bind('click', function() {
+                history.back();
+                scope.$apply();
+            });
         }
-    }]);
+    };
+});
 
 app.directive('alerts', function() {
     return {
@@ -26,29 +21,16 @@ app.directive('alerts', function() {
     };
 });
 
-app.directive("loadingIndicator", function() {
+app.directive("autofill", function() {
     return {
-        restrict: "A",
-        templateUrl: 'partials/loading.html',
-        link: function(scope, element, attrs) {
-
-            scope.$on("loading-started", function(e) {
-                element.css({"display": ""});
+        require: "ngModel",
+        link: function(scope, element, attrs, ngModel) {
+            scope.$on("autofill:update", function() {
+                ngModel.$setViewValue(element.val());
             });
-
-            scope.$on("loading-complete", function(e) {
-                element.css({"display": "none"});
-            });
-
         }
     };
 });
-
-app.directive("appVersion", ["version", function(version) {
-        return function(scope, elm, attrs) {
-            elm.text(version);
-        };
-    }]);
 
 app.directive("confirmButton", function($timeout) {
     return {
@@ -96,7 +78,6 @@ app.directive("confirmButton", function($timeout) {
     };
 });
 
-
 app.directive('ngEnter', function() {
     return function(scope, element, attrs) {
         element.bind("keydown keypress", function(event) {
@@ -110,4 +91,3 @@ app.directive('ngEnter', function() {
         });
     };
 });
-

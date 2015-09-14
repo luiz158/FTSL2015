@@ -22,8 +22,16 @@ public abstract class AbstractFacade<T> {
 
     protected abstract EntityManager getEntityManager();
 
+    public Object findNamedQuary(String namedQuary) {
+        return getEntityManager().createNamedQuery(namedQuary).getResultList();
+    }
+
     public Object findNamedQuary(String namedQuary, String nameParameter, Object parameter) {
         return getEntityManager().createNamedQuery(namedQuary).setParameter(nameParameter, parameter).getResultList();
+    }
+
+    public Object findNamedQuary(String namedQuary, String nameParameter1, Object parameter1, String nameParameter2, Object parameter2) {
+        return getEntityManager().createNamedQuery(namedQuary).setParameter(nameParameter1, parameter1).setParameter(nameParameter2, parameter2).getResultList();
     }
 
 }

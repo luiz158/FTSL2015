@@ -5,10 +5,15 @@
  */
 package pgxp.service;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -21,13 +26,13 @@ import pgxp.domain.LogLogradouro;
  * @author gladson
  */
 @Stateless
-@Path("log")
-public class LogLogradouroFacadeREST extends AbstractFacade<LogLogradouro> {
+@Path("cod")
+public class LogCEPFacadeREST extends AbstractFacade<LogLogradouro> {
 
     @PersistenceContext(unitName = "pgxp_cep_war_1.0.0PU")
     private EntityManager em;
 
-    public LogLogradouroFacadeREST() {
+    public LogCEPFacadeREST() {
         super(LogLogradouro.class);
     }
 
@@ -37,10 +42,10 @@ public class LogLogradouroFacadeREST extends AbstractFacade<LogLogradouro> {
     }
 
     @GET
-    @Path("{uf}/{nome}")
+    @Path("{cep}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response find(@PathParam("uf") String uf, @PathParam("nome") String nome) {
-        return Response.ok().entity(super.findNamedQuary("LogLogradouro.findByLogNome", "ufeSg", uf, "logNome", "%" + nome + "%")).build();
+    public Response find(@PathParam("cep") String id) {
+        return Response.ok().entity(super.findNamedQuary("LogLogradouro.findByCep", "cep", id)).build();
     }
 
 }

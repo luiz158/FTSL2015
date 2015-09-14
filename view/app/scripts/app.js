@@ -1,36 +1,50 @@
 'use strict';
 
-var app = angular.module('viewApp', [
-    'ngAria',
-    'ngMessages',
+var app = angular.module('cep', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
     'ngRoute',
     'ngSanitize',
     'ngAnimate',
-    'ngTouch'
+    'ngTouch',
+    'lumx'
 
-]).config(['$routeProvider', '$httpProvider', 'USER_ROLES', function($routeProvider, USER_ROLES) {
+]).config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_ROLES) {
 
-        $routeProvider.when('/403', {templateUrl: 'views/403.html', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
+        $routeProvider.otherwise({redirectTo: '/cep', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
 
-        $routeProvider.when('/login', {templateUrl: 'views/login.html', controller: 'AuthController', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
-        $routeProvider.when('/todo', {templateUrl: 'views/todo.html', controller: 'TodoController', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
+        $routeProvider.when('/403', {redirectTo: '403.html', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
+        $routeProvider.when('/404', {redirectTo: '404.html', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
+        $routeProvider.when('/500', {redirectTo: '500.html', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
 
-        $routeProvider.when('/', {templateUrl: 'views/todo.html', controller: 'TodoController', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
+        $routeProvider.when('/cep', {templateUrl: 'views/cep/edit.html', controller: 'CEPController', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
+        $routeProvider.when('/cep/:id', {templateUrl: 'views/cep/edit.html', controller: 'CEPController', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
+
+        $routeProvider.when('/logra', {templateUrl: 'views/logra/list.html', controller: 'LograController', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
+        $routeProvider.when('/logra/edit', {templateUrl: 'views/logra/edit.html', controller: 'LograController', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
+        $routeProvider.when('/logra/edit/:id', {templateUrl: 'views/logra/edit.html', controller: 'LograController', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
+
+        $routeProvider.when('/especial', {templateUrl: 'views/especial/list.html', controller: 'EspecialController', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
+
 
     }]);
 
 app.config(['$httpProvider', function($httpProvider) {
 
-        $httpProvider.interceptors.push(['$q', '$rootScope', function($q, $rootScope) {
+        $httpProvider.interceptors.push(['$q', '$rootScope', 'AppService', 'AUTH_EVENTS', 'Session', function($q, $rootScope, AppService, AUTH_EVENTS, Session) {
                 return {
                     'request': function(config) {
                         $rootScope.$broadcast('loading-started');
 
+                        var token = AppService.getToken();
+
                         if (config.url.indexOf("api") !== -1) {
-                            config.url = 'http://localhost:9090/server/' + config.url;
+                            config.url = 'http://10.200.24.50:8080/cep/' + config.url;
+                        }
+
+                        if (token) {
+                            config.headers['Authorization'] = "Token " + token;
                         }
 
                         return config || $q.when(config);
@@ -40,6 +54,12 @@ app.config(['$httpProvider', function($httpProvider) {
                         return response || $q.when(response);
                     },
                     'responseError': function(rejection) {
+
+                        var status = rejection.status
+                        if (status !== 401 && status !== 412 && status !== 422 && status !== 400) {
+                            $rootScope.$broadcast(AUTH_EVENTS.sessionTimeout);
+                        }
+
                         $rootScope.$broadcast('loading-complete');
                         return $q.reject(rejection);
                     },
@@ -54,33 +74,40 @@ app.config(['$httpProvider', function($httpProvider) {
                 return $injector.get('AuthInterceptor');
             }]);
 
+
     }]);
 
-app.run(['$rootScope', '$location', '$window', 'AUTH_EVENTS', 'APP_EVENTS', 'USER_ROLES', 'AuthService',
-    function($rootScope, $location, $window, AUTH_EVENTS, APP_EVENTS, USER_ROLES, AuthService) {
+app.run(['$rootScope', '$location', 'AUTH_EVENTS', 'USER_ROLES', 'AuthService', 'AppService', 'Session',
+    function($rootScope, $location, AUTH_EVENTS, USER_ROLES, AuthService, AppService, Session) {
 
         $rootScope.$on('$routeChangeStart', function(event, next) {
+            var authorizedRoles = next.data.authorizedRoles;
 
-            if (next.redirectTo !== '/') {
-                var authorizedRoles = next.data.authorizedRoles;
+            if (authorizedRoles.indexOf(USER_ROLES.NOT_LOGGED) === -1) {
 
-                if (authorizedRoles[0] !== undefined && authorizedRoles.indexOf(USER_ROLES.NOT_LOGGED) === -1) {
-
-                    if (!AuthService.isAuthorized(authorizedRoles)) {
-                        event.preventDefault();
-                        if (AuthService.isAuthenticated()) {
-                            // user is not allowed
-                            $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
-                        }
-                        else {
-                            // user is not logged in
-                            $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
-                        }
+                if (!AuthService.isAuthorized(authorizedRoles)) {
+                    event.preventDefault();
+                    if (AuthService.isAuthenticated()) {
+                        // user is not allowed
+                        $rootScope.$broadcast(AUTH_EVENTS.notAuthorized);
+                    }
+                    else {
+                        // user is not logged in
+                        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated);
                     }
                 }
+
             }
         });
 
+
+        $rootScope.$watch(function() {
+            return $location.path()
+        }, function(newLocation) {
+            if ($rootScope.actualLocation === newLocation) {
+                alert('Why did you use history back?');
+            }
+        });
 
         $rootScope.$on(AUTH_EVENTS.notAuthorized, function() {
             console.log("notAuthorized");
@@ -88,51 +115,42 @@ app.run(['$rootScope', '$location', '$window', 'AUTH_EVENTS', 'APP_EVENTS', 'USE
         });
 
         $rootScope.$on(AUTH_EVENTS.notAuthenticated, function() {
+            Session.destroy();
             console.log("notAuthenticated");
-            $rootScope.currentUser = null;
-            $location.path("/login");
+            $rootScope.setCurrentUser(null);
+            AppService.removeToken();
+            $location.path("/cep");
         });
 
-        $rootScope.$on(AUTH_EVENTS.sessionTimeout, function() {
+        $rootScope.$on(AUTH_EVENTS.sessionTimeout, function(e) {
+            Session.destroy();
             console.log("sessionTimeout");
+            $rootScope.setCurrentUser(null);
+            AppService.removeToken();
+            $location.path("/cep");
         });
 
         $rootScope.$on(AUTH_EVENTS.loginFailed, function() {
+            Session.destroy();
             console.log("loginFailed");
-            $location.path("/login");
+            $rootScope.setCurrentUser(null);
+            AppService.removeToken();
+            $location.path("/cep");
         });
 
         $rootScope.$on(AUTH_EVENTS.logoutSuccess, function() {
+            Session.destroy();
             console.log("logoutSuccess");
-            $rootScope.currentUser = null;
-            $location.path("/todo");
+            $rootScope.setCurrentUser(null);
+            AppService.removeToken();
+            $location.path("/cep");
         });
 
         $rootScope.$on(AUTH_EVENTS.loginSuccess, function() {
-            $location.path("/todo");
+            $location.path("/cep");
         });
-
-        $rootScope.$on(APP_EVENTS.offline, function() {
-            AlertService.addWithTimeout('danger', 'Servidor esta temporariamente indisponível, tente mais tarde');
-        });
-
-        // Check if a new cache is available on page load.
-        $window.addEventListener('load', function(e) {
-            $window.applicationCache.addEventListener('updateready', function(e) {
-                console.log($window.applicationCache.status);
-                if ($window.applicationCache.status === $window.applicationCache.UPDATEREADY) {
-                    // Browser downloaded a new app cache.
-                    $window.location.reload();
-                    alert('Uma nova versão será carregada!');
-                }
-            }, false);
-        }, false);
 
     }]);
-
-app.constant('APP_EVENTS', {
-    offline: 'app-events-offline'
-});
 
 app.constant('AUTH_EVENTS', {
     loginSuccess: 'auth-login-success',
@@ -144,20 +162,18 @@ app.constant('AUTH_EVENTS', {
 });
 
 app.constant('USER_ROLES', {
-    ADMINISTRADOR: 'ADMINISTRADOR',
+    ADMINISTRATOR: 'ADMINISTRATOR',
+    MANAGER: 'MANAGER',
+    USER: 'USER',
     NOT_LOGGED: 'NOT_LOGGED'
 });
 
-app.factory('AuthInterceptor', ['$rootScope', '$q', 'AUTH_EVENTS', 'APP_EVENTS',
-    function($rootScope, $q, AUTH_EVENTS, APP_EVENTS) {
+app.factory('AuthInterceptor', ['$rootScope', '$q', 'AUTH_EVENTS', function($rootScope, $q, AUTH_EVENTS) {
 
         return {
             responseError: function(response) {
 
                 $rootScope.$broadcast({
-                    0: APP_EVENTS.offline,
-                    404: APP_EVENTS.offline,
-                    503: APP_EVENTS.offline,
                     401: AUTH_EVENTS.notAuthenticated,
                     403: AUTH_EVENTS.notAuthorized,
                     419: AUTH_EVENTS.sessionTimeout,
@@ -170,8 +186,4 @@ app.factory('AuthInterceptor', ['$rootScope', '$q', 'AUTH_EVENTS', 'APP_EVENTS',
 
     }]);
 
-app.constant('config', {
-    SIGNALIG_SERVER_URL: '10.200.24.50:7777'
-});
-
-app.value('version', '1.0.0');
+app.value('version', '0.0.0');

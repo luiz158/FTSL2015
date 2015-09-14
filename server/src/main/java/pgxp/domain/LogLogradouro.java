@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LogLogradouro.findByLogNuSequencial", query = "SELECT l FROM LogLogradouro l WHERE l.logNuSequencial = :logNuSequencial"),
     @NamedQuery(name = "LogLogradouro.findByUfeSg", query = "SELECT l FROM LogLogradouro l WHERE l.ufeSg = :ufeSg"),
     @NamedQuery(name = "LogLogradouro.findByLogNo", query = "SELECT l FROM LogLogradouro l WHERE l.logNo = :logNo"),
-    @NamedQuery(name = "LogLogradouro.findByLogNome", query = "SELECT l FROM LogLogradouro l WHERE l.logNome = :logNome"),
+    @NamedQuery(name = "LogLogradouro.findByLogNome", query = "SELECT l FROM LogLogradouro l WHERE l.ufeSg = :ufeSg and l.logNome LIKE :logNome"),
     @NamedQuery(name = "LogLogradouro.findByBaiNuSequencialFim", query = "SELECT l FROM LogLogradouro l WHERE l.baiNuSequencialFim = :baiNuSequencialFim"),
     @NamedQuery(name = "LogLogradouro.findByCep", query = "SELECT l FROM LogLogradouro l WHERE l.cep = :cep"),
     @NamedQuery(name = "LogLogradouro.findByLogComplemento", query = "SELECT l FROM LogLogradouro l WHERE l.logComplemento = :logComplemento"),
@@ -95,12 +95,6 @@ public class LogLogradouro implements Serializable {
     @Size(max = 8)
     @Column(length = 8)
     private String temp;
-    @JoinColumn(name = "bai_nu_sequencial_ini", referencedColumnName = "bai_nu_sequencial", nullable = false)
-    @ManyToOne(optional = false)
-    private LogBairro baiNuSequencialIni;
-    @JoinColumn(name = "loc_nu_sequencial", referencedColumnName = "loc_nu_sequencial", nullable = false)
-    @ManyToOne(optional = false)
-    private LogLocalidade locNuSequencial;
 
     public LogLogradouro() {
     }
@@ -223,22 +217,6 @@ public class LogLogradouro implements Serializable {
         this.temp = temp;
     }
 
-    public LogBairro getBaiNuSequencialIni() {
-        return baiNuSequencialIni;
-    }
-
-    public void setBaiNuSequencialIni(LogBairro baiNuSequencialIni) {
-        this.baiNuSequencialIni = baiNuSequencialIni;
-    }
-
-    public LogLocalidade getLocNuSequencial() {
-        return locNuSequencial;
-    }
-
-    public void setLocNuSequencial(LogLocalidade locNuSequencial) {
-        this.locNuSequencial = locNuSequencial;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -263,5 +241,5 @@ public class LogLogradouro implements Serializable {
     public String toString() {
         return "pgxp.domain.LogLogradouro[ logNuSequencial=" + logNuSequencial + " ]";
     }
-    
+
 }
