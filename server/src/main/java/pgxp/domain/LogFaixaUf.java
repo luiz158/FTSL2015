@@ -10,7 +10,6 @@ import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -85,6 +84,8 @@ public class LogFaixaUf implements Serializable {
     @Size(max = 3)
     @Column(name = "ufe_suf2_fim", length = 3)
     private String ufeSuf2Fim;
+    @OneToMany(mappedBy = "ufeSg")
+    private List<LogLocalidade> logLocalidadeList;
 
     public LogFaixaUf() {
     }
@@ -182,7 +183,14 @@ public class LogFaixaUf implements Serializable {
         this.ufeSuf2Fim = ufeSuf2Fim;
     }
 
+    @XmlTransient
+    public List<LogLocalidade> getLogLocalidadeList() {
+        return logLocalidadeList;
+    }
 
+    public void setLogLocalidadeList(List<LogLocalidade> logLocalidadeList) {
+        this.logLocalidadeList = logLocalidadeList;
+    }
 
     @Override
     public int hashCode() {
@@ -208,5 +216,5 @@ public class LogFaixaUf implements Serializable {
     public String toString() {
         return "pgxp.domain.LogFaixaUf[ ufeSg=" + ufeSg + " ]";
     }
-
+    
 }

@@ -95,6 +95,12 @@ public class LogLogradouro implements Serializable {
     @Size(max = 8)
     @Column(length = 8)
     private String temp;
+    @JoinColumn(name = "bai_nu_sequencial_ini", referencedColumnName = "bai_nu_sequencial", nullable = false)
+    @ManyToOne(optional = false)
+    private LogBairro baiNuSequencialIni;
+    @JoinColumn(name = "loc_nu_sequencial", referencedColumnName = "loc_nu_sequencial", nullable = false)
+    @ManyToOne(optional = false)
+    private LogLocalidade locNuSequencial;
 
     public LogLogradouro() {
     }
@@ -217,6 +223,22 @@ public class LogLogradouro implements Serializable {
         this.temp = temp;
     }
 
+    public LogBairro getBaiNuSequencialIni() {
+        return baiNuSequencialIni;
+    }
+
+    public void setBaiNuSequencialIni(LogBairro baiNuSequencialIni) {
+        this.baiNuSequencialIni = baiNuSequencialIni;
+    }
+
+    public LogLocalidade getLocNuSequencial() {
+        return locNuSequencial;
+    }
+
+    public void setLocNuSequencial(LogLocalidade locNuSequencial) {
+        this.locNuSequencial = locNuSequencial;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -241,5 +263,5 @@ public class LogLogradouro implements Serializable {
     public String toString() {
         return "pgxp.domain.LogLogradouro[ logNuSequencial=" + logNuSequencial + " ]";
     }
-
+    
 }

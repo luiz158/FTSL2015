@@ -1,14 +1,14 @@
 'use strict';
 
-app.factory('LograService', ['$http', '$q', function ($http, $q) {
+app.factory('UFService', ['$http', '$q', function ($http, $q) {
         var service = {};
 
-        service.get = function (uf, logra) {
+        service.findAll = function () {
 
             var deferred = $q.defer();
 
             $http({
-                url: 'api/log/' + uf + '/' + logra,
+                url: 'api/uf',
                 method: "GET"
             }).success(function (data) {
                 deferred.resolve(data);

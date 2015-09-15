@@ -1,8 +1,27 @@
 <div class="main-section">
     <h3 class="main-section__title">Busca Logradouro</h3>
+    <div  flex-container="row" flex-gutter="9">
+        <div flex-item>
+            <lx-text-field label="UF" >
+                <lx-select ng-model="ufs"  choices="ufs" floating-label>
+                    <lx-select-selected>
+                        {{ $selected.ufeSg + ' ' + $selected.ufeNo}}
+                    </lx-select-selected>
 
+                    <lx-select-choices>
+                        {{ $selected.ufeSg}}
+                    </lx-select-choices>
+                </lx-select>
+            </lx-text-field>
+        </div>
+        <div flex-item>
+            <lx-text-field label="Logradouro" >
+                <input type="text" class="form-control" ng-model="texto" ng-enter="get(texto)">
+            </lx-text-field>
+            <button type="button" ng-click="get(texto)" />
+        </div>
+    </div>
     <div class="main-section__content">
-        <button class="btn btn--l btn--red btn--fab" lx-ripple ><i class="mdi mdi-plus"></i></button>
         <div class="example mt++">
             <div class="example__content">
 
@@ -10,20 +29,17 @@
                     <table id="tabela" class="data-table data-table--has-primary data-table--has-secondary">
                         <thead>
                             <tr>
-                                <th>id</th>
-                                <th>released</th>
-                                <th>metascore</th>
-                                <th>plot</th>
-                                <th>director</th>
+                                <th>CEP</th>
+                                <th>Cidade</th>
+                                <th>Bairro</th>
+                                <th>Tipo</th>
+                                <th>Logradouro</th>
                             </tr>
                         </thead>
-                        <tbody ng-repeat="c in bookmarks">
+                        <tbody ng-repeat="r in resultados">
                             <tr class="data-table__clickable-row">
-                                <td>{{c.id}}</td>
-                                <td>{{c.released}}</td>
-                                <td>{{c.metascore}}</td>
-                                <td>{{c.plot}}</td>
-                                <td>{{c.director}}</td>
+                                <td>{{r.cep}}</td>
+
                             </tr>
                         </tbody>
                     </table>
