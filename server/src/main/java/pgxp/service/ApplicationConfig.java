@@ -24,6 +24,8 @@ public class ApplicationConfig extends Application {
         resources.add(pgxp.service.LogLogradouroFacadeREST.class);
         resources.add(pgxp.service.LogUFFacadeREST.class);
         resources.add(pgxp.util.Cors.class);
+        resources.add(pgxp.util.Filter.class);
+        resources.add(pgxp.util.Tracking.class);
     }
 
 }

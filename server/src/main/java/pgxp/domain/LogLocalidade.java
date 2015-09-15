@@ -41,6 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "LogLocalidade.findByLocNuSequencialSub", query = "SELECT l FROM LogLocalidade l WHERE l.locNuSequencialSub = :locNuSequencialSub"),
     @NamedQuery(name = "LogLocalidade.findByTemp", query = "SELECT l FROM LogLocalidade l WHERE l.temp = :temp")})
 public class LogLocalidade implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -73,8 +74,6 @@ public class LogLocalidade implements Serializable {
     @JoinColumn(name = "ufe_sg", referencedColumnName = "ufe_sg")
     @ManyToOne
     private LogFaixaUf ufeSg;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "locNuSequencial")
-    private List<LogLogradouro> logLogradouroList;
 
     public LogLocalidade() {
     }
@@ -169,15 +168,6 @@ public class LogLocalidade implements Serializable {
         this.ufeSg = ufeSg;
     }
 
-    @XmlTransient
-    public List<LogLogradouro> getLogLogradouroList() {
-        return logLogradouroList;
-    }
-
-    public void setLogLogradouroList(List<LogLogradouro> logLogradouroList) {
-        this.logLogradouroList = logLogradouroList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -202,5 +192,5 @@ public class LogLocalidade implements Serializable {
     public String toString() {
         return "pgxp.domain.LogLocalidade[ locNuSequencial=" + locNuSequencial + " ]";
     }
-    
+
 }

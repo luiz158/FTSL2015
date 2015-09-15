@@ -13,7 +13,7 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -32,6 +32,11 @@
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.piwik</groupId>
+            <artifactId>piwik-java-tracking</artifactId>
+            <version>1.1.0</version>
         </dependency>
     </dependencies>
 

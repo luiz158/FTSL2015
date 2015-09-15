@@ -42,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "LogLogradouro.findByIndGru", query = "SELECT l FROM LogLogradouro l WHERE l.indGru = :indGru"),
     @NamedQuery(name = "LogLogradouro.findByTemp", query = "SELECT l FROM LogLogradouro l WHERE l.temp = :temp")})
 public class LogLogradouro implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -98,9 +99,6 @@ public class LogLogradouro implements Serializable {
     @JoinColumn(name = "bai_nu_sequencial_ini", referencedColumnName = "bai_nu_sequencial", nullable = false)
     @ManyToOne(optional = false)
     private LogBairro baiNuSequencialIni;
-    @JoinColumn(name = "loc_nu_sequencial", referencedColumnName = "loc_nu_sequencial", nullable = false)
-    @ManyToOne(optional = false)
-    private LogLocalidade locNuSequencial;
 
     public LogLogradouro() {
     }
@@ -231,14 +229,6 @@ public class LogLogradouro implements Serializable {
         this.baiNuSequencialIni = baiNuSequencialIni;
     }
 
-    public LogLocalidade getLocNuSequencial() {
-        return locNuSequencial;
-    }
-
-    public void setLocNuSequencial(LogLocalidade locNuSequencial) {
-        this.locNuSequencial = locNuSequencial;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -263,5 +253,5 @@ public class LogLogradouro implements Serializable {
     public String toString() {
         return "pgxp.domain.LogLogradouro[ logNuSequencial=" + logNuSequencial + " ]";
     }
-    
+
 }

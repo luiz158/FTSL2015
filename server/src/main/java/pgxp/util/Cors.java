@@ -9,12 +9,14 @@ package pgxp.util;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.ContainerResponseFilter;
+import javax.ws.rs.container.PreMatching;
 import javax.ws.rs.ext.Provider;
 
 /**
  *
  * @author 70744416353
  */
+@PreMatching
 @Provider
 public class Cors implements ContainerResponseFilter {
 
