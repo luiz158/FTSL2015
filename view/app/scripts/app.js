@@ -8,7 +8,9 @@ var app = angular.module('cep', [
     'ngSanitize',
     'ngAnimate',
     'ngTouch',
-    'lumx'
+    'lumx',
+    'angulartics',
+    'angulartics.piwik'
 
 ]).config(['$routeProvider', 'USER_ROLES', function($routeProvider, USER_ROLES) {
 
