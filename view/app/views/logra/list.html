@@ -2,51 +2,36 @@
     <h3 class="main-section__title">Busca Logradouro</h3>
     <div  flex-container="row" flex-gutter="9">
         <div flex-item>
-            <lx-text-field label="UF" >
-                <lx-select ng-model="ufs"  choices="ufs" floating-label>
-                    <lx-select-selected>
-                        {{ $selected.ufeSg + ' ' + $selected.ufeNo}}
-                    </lx-select-selected>
-
-                    <lx-select-choices>
-                        {{ $selected.ufeSg}}
-                    </lx-select-choices>
-                </lx-select>
-            </lx-text-field>
-        </div>
-        <div flex-item>
+            <select ng-options="item.ufeSg as item.ufeNo for item in ufs track by item.ufeSg" ng-model="selected"></select>
             <lx-text-field label="Logradouro" >
                 <input type="text" class="form-control" ng-model="texto" ng-enter="get(texto)">
             </lx-text-field>
-            <button type="button" ng-click="get(texto)" />
         </div>
     </div>
-    <div class="main-section__content">
-        <div class="example mt++">
-            <div class="example__content">
+    <div class="data-table-container">
 
-                <div class="data-table-container">
-                    <table id="tabela" class="data-table data-table--has-primary data-table--has-secondary">
-                        <thead>
-                            <tr>
-                                <th>CEP</th>
-                                <th>Cidade</th>
-                                <th>Bairro</th>
-                                <th>Tipo</th>
-                                <th>Logradouro</th>
-                            </tr>
-                        </thead>
-                        <tbody ng-repeat="r in resultados">
-                            <tr class="data-table__clickable-row">
-                                <td>{{r.cep}}</td>
-
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
+        <table class="data-table">
+            <thead>
+                <tr class="data-table__clickable-row">
+                    <th WIDTH="100">CEP</th>
+                    <th WIDTH="100">Cidade</th>
+                    <th WIDTH="200">Bairro</th>
+                    <th>Logradouro</th>
+                </tr>
+            </thead>
+            <div style="max-height: {{ scrollbarHeight}}px;" lx-scrollbar>
+                <tbody ng-repeat="r in resultados">
+                    <tr class="data-table__clickable-row">
+                        <td>{{r.cep}}</td>
+                        <td>{{r.baiNuSequencialIni.locNuSequencial.locNo}}</td>
+                        <td>{{r.baiNuSequencialIni.baiNo}}</td>
+                        <td>{{r.logNome}}</td>
+                    </tr>
+                </tbody>
             </div>
-        </div>
+        </table>
+
+
     </div>
 
 </div>

@@ -22,8 +22,6 @@ var app = angular.module('cep', [
         $routeProvider.when('/cep/:id', {templateUrl: 'views/cep/edit.html', controller: 'CEPController', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
 
         $routeProvider.when('/logra', {templateUrl: 'views/logra/list.html', controller: 'LograController', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
-        $routeProvider.when('/logra/edit', {templateUrl: 'views/logra/edit.html', controller: 'LograController', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
-        $routeProvider.when('/logra/edit/:id', {templateUrl: 'views/logra/edit.html', controller: 'LograController', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
 
         $routeProvider.when('/especial', {templateUrl: 'views/especial/list.html', controller: 'EspecialController', data: {authorizedRoles: [USER_ROLES.NOT_LOGGED]}});
 
@@ -40,7 +38,7 @@ app.config(['$httpProvider', function($httpProvider) {
                         var token = AppService.getToken();
 
                         if (config.url.indexOf("api") !== -1) {
-                            config.url = 'http://localhost:8080/cep/' + config.url;
+                            config.url = 'http://10.200.24.50:8080/cep/' + config.url;
                         }
 
                         if (token) {
