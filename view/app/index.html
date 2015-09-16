@@ -131,20 +131,27 @@
 
         <!-- Piwik -->
         <script type="text/javascript">
-          var _paq = _paq || [];
-          _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
-          // _paq.push(['trackPageView']);
-          _paq.push(['enableLinkTracking']);
-          (function() {
-            var u="//10.200.24.50/piwik/";
-            _paq.push(['setTrackerUrl', u+'piwik.php']);
-            _paq.push(['setSiteId', 3]);
-            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-            g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-          })();
+                                var _paq = _paq || [];
+                                _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+                                _paq.push(["setCookieDomain", "*.www.pgxp.com.br"]);
+                                _paq.push(["setDomains", ["*.www.pgxp.com.br", "*.cep.pgxp.com.br"]]);
+                                _paq.push(['trackPageView']);
+                                _paq.push(['enableLinkTracking']);
+                                (function() {
+                                    var u = "//www.pgxp.com.br/piwik/";
+                                    _paq.push(['setTrackerUrl', u + 'piwik.php']);
+                                    _paq.push(['setSiteId', 3]);
+                                    var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+                                    g.type = 'text/javascript';
+                                    g.async = true;
+                                    g.defer = true;
+                                    g.src = u + 'piwik.js';
+                                    s.parentNode.insertBefore(g, s);
+                                })();
         </script>
-        <noscript><p><img src="//10.200.24.50/piwik/piwik.php?idsite=3" style="border:0;" alt="" /></p></noscript>
+        <noscript><p><img src="//www.pgxp.com.br/piwik/piwik.php?idsite=3" style="border:0;" alt="" /></p></noscript>
         <!-- End Piwik Code -->
+
 
 
     </body>
