@@ -11,7 +11,6 @@ import javax.ws.rs.client.ClientResponseContext;
 import javax.ws.rs.client.ClientResponseFilter;
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.container.ContainerResponseContext;
 import javax.ws.rs.container.PreMatching;
 import javax.ws.rs.ext.Provider;
 
@@ -33,6 +32,25 @@ public class Filter implements ClientRequestFilter, ClientResponseFilter, Contai
 
     @Override
     public void filter(ContainerRequestContext requestContext) {
+//        try {
+//            SimplePiwikTracker instance = new SimplePiwikTracker("http://192.168.100.3/piwik");
+//            instance.setIdSite(3);
+//            System.out.println(requestContext.getUriInfo().getAbsolutePath().toString());
+//            ResponseData result = instance.sendRequest(requestContext.getUriInfo().getAbsolutePath().toURL());
+//            for (javax.servlet.http.Cookie c : result.getCookies()) {
+//                System.out.println(c.getComment());
+//                System.out.println(c.getDomain());
+//                System.out.println(c.getMaxAge());
+//                System.out.println(c.getName());
+//                System.out.println(c.getPath());
+//                System.out.println(c.getSecure());
+//                System.out.println(c.getValue());
+//                System.out.println(c.getVersion());
+//                System.out.println("-------------------------");
+//            }
+//
+//        } catch (PiwikException | MalformedURLException ex) {
+//            Logger.getLogger(Filter.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
-
 }
