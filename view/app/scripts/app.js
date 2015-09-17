@@ -40,7 +40,7 @@ app.config(['$httpProvider', function($httpProvider) {
                         var token = AppService.getToken();
 
                         if (config.url.indexOf("api") !== -1) {
-                            config.url = 'http://10.200.24.50:8080/cep/' + config.url;
+                            config.url = 'https://www.pgxp.com.br/cep/' + config.url;
                         }
 
                         if (token) {
